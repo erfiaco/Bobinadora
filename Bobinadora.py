@@ -5,7 +5,7 @@ step_pin = 17
 dir_pin = 18
 
 #creo instancia del motor
-Stepper = RpiMotorLib.A4988Nema(dir_pin, step_pin,(21,21,21), "DRV8825")
+Stepper = RpiMotorLib.A4988Nema(dir_pin, step_pin,(5,6,13), "DRV8825")
 
 #configuración del motor
 speed = 4000 (pasos por segundo)
