@@ -1,0 +1,7 @@
+# EMERGENCY STOP BUTTON CODE: See docstring
+def button_callback(channel):
+    print("Test file: Stopping motor")
+    mymotortest.motor_stop()
+
+
+hacer que de un num determinado de vueltas
