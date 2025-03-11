@@ -1,0 +1,31 @@
+va de una posición a la otra en bucle 
+
+
+from RpiMotorLib import RpiMotorLib
+import time
+
+# Configuración de los pines GPIO (ajusta según tu conexión)
+GpioPins = [17, 18, 27, 22]  # [DIR, STEP, MS1, MS2] para el controlador A4988/DRV8825
+
+# Inicialización del motor paso a paso
+stepper = RpiMotorLib.A4988Nema(GpioPins[0], GpioPins[1], GpioPins[2], GpioPins[3], "DRV8825")
+
+# Parámetros del motor
+max_speed = 4000  # Velocidad máxima en pasos por segundo
+steps_per_rev = 200  # Pasos por revolución (ajusta según tu motor)
+target_position = 200  # Posición objetivo inicial
+
+def setup():
+    stepper.motor_go(True, "Full", target_position, max_speed / 1000, False, 0.05)  # Mueve el motor a la posición 200
+
+def loop():
+    global target_position
+    while True:
+        if stepper.motor_status() == "stopped":  # Si el motor ha llegado a su posición objetivo
+            target_position = -target_position  # Invierte la posición objetivo
+            stepper.motor_go(True, "Full", abs(target_position), max_speed / 1000, False, 0.05)  # Mueve el motor a la nueva posición
+        time.sleep(1)  # Espera 1 segundo antes de repetir el proceso
+
+if __name__ == "__main__":
+    setup()
+    loop()
