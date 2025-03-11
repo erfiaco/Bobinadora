@@ -4,4 +4,6 @@ def button_callback(channel):
     mymotortest.motor_stop()
 
 
-hacer que de un num determinado de vueltas
+hacer que de un num determinado de vueltas DONE
+
+Anadir potenciometro para control velocidad
