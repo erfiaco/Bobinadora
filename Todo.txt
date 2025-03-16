@@ -6,4 +6,4 @@ def button_callback(channel):
 
 hacer que de un num determinado de vueltas DONE
 
-Anadir potenciometro para control velocidad
+Anadir potenciometro para control velocidad Done
