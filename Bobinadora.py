@@ -34,6 +34,18 @@ def stop_loop(channel):
     print("Button pressed. Stopping the loop...")
     running = False
 
+# Filtro de promedio movil
+readings = []
+num_readings = 3  # Numero de lecturas para el promedio
+
+def read_potentiometer():
+    global readings
+    pot_value = adc.read_adc(0, gain=GAIN)
+    readings.append(pot_value)
+    if len(readings) > num_readings:
+        readings.pop(0)
+    return sum(readings) / len(readings)
+
 # Add event detector for the button
 GPIO.add_event_detect(button_pin, GPIO.FALLING, callback=stop_loop, bouncetime=300)  # Debounce time = 300ms
 
@@ -45,7 +57,7 @@ try:
     while i < vueltas and running:
   
         #leer valor potenciometro
-        pot_value = adc.read_adc(0, gain = GAIN)
+        pot_value = read_potentiometer()
         #mapear valor del potenciometro a la vel del motor
         speed = map_value(pot_value, 0, 32767, min_speed, max_speed)
   
