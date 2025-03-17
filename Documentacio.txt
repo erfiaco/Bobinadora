@@ -1,0 +1,8 @@
+Motor posicionador:
+    Modelo: Mini 10mm Stepper Motor
+    Corriente/Fase: 300mA
+    Nominal Rated Input Voltage: 5V
+    Fase: 2
+    Ángulo de paso: 18
+    Rojo A +, Blanco A-, negro B +, Marrón B-
+    
