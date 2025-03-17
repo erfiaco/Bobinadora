@@ -3,27 +3,6 @@ import Adafruit_ADS1x15
 import time
 import RPi.GPIO as GPIO
 
-
-
-
-
-        
-
-try:
-    vueltas = len(positions)+1
-    i = 0
-
-    while i < vueltas and running:
-  
-        #mover motor a posicion determinada
-        
-  
-        i += 1
-
-
-
-
-
 #Pin Configuration GPIO mode
 step_pin = 17
 dir_pin = 18
@@ -111,7 +90,7 @@ try:
         #mover motor a vel calculada
         stepper.motor_go(True, "Full", steps_per_revolution, 1.0 / speed, False, 0)
         #mover motor posicionador hasta alcanzar posicion deseada
-        posicionador.motor_go(movements[i][1], "Full", movements[i][0], 0.001, False, 1/speed)
+        posicionador.motor_go(movements[i][1], "Full", movements[i][0], 0.001, False, steps_per_revolution/speed)
         
         i += 1
         print(f"N. de vueltas: {i}, a vel: {speed/steps_per_revolution} vueltas/seg")  
