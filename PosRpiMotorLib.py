@@ -4,14 +4,13 @@ import time
 import RPi.GPIO as GPIO
 
 #Pin Configuration GPIO mode
-step_pin_pos = 17
-dir_pin_pos = 18
+step_pin_pos = 16 #Board 36
+dir_pin_pos = 20  #Board 38
+#el motor es de 5v
 
 #creo instancia del motor
-posicionador = RpiMotorLib.A4988Nema(dir_pin_pos, step_pin_pos,(5,6,13), "A4988")
+posicionador = RpiMotorLib.A4988Nema(dir_pin_pos, step_pin_pos,(5,6,13), "?????")
 
-#configuracion del posicionador
-steps_per_revolution_pos = 200
 
 def generate_steps_matrix(positions):
         """
