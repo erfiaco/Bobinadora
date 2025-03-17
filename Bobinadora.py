@@ -90,7 +90,7 @@ try:
         #mover motor a vel calculada
         stepper.motor_go(True, "Full", steps_per_revolution, 1.0 / speed, False, 0)
         #mover motor posicionador hasta alcanzar posicion deseada
-        posicionador.motor_go(movements[i][1], "Full", movements[i][0], 0.001, False, steps_per_revolution/speed)
+        posicionador.motor_go(movements[i][1], "Full", movements[i][0], 0.001, False, steps_per_revolution/speed - 0.001*movements[i][1])
         
         i += 1
         print(f"N. de vueltas: {i}, a vel: {speed/steps_per_revolution} vueltas/seg")  
