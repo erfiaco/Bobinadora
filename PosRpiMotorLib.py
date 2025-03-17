@@ -21,7 +21,7 @@ running = True
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(button_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)  # Button with pull-up resistor
 
-def generate_steps_matrix(self, positions):
+def generate_steps_matrix(positions):
         """
         Genera una matriz con el número de pasos necesarios y la dirección para alcanzar
         cada posición objetivo desde la posición actual.
@@ -39,25 +39,30 @@ def generate_steps_matrix(self, positions):
             current_position = target_position  # Actualiza la posición actual
     
         return steps_matrix
+speed = 2
 
+positions = [400,20,1,5,6,8]
 
-Posiciones = [400,20,1,5,6,8]
+movements = generate_steps_matrix(positions)
+        
 
-
+        # Ejecutar los movimientos en el vector
+        for steps, direction in movements:
+            print(f"Moviendo {steps} pasos hacia {direction}...")
+            current_t = time.time()
+            motor.move_steps(steps, direction)
+            elapsed_time = time.time() - current_t
+            time.sleep(1 - elapsed_time)  # Esperar el tiempo restante
+            
 
 try:
-    vueltas = 10
+    vueltas = len(positions)+1
     i = 0
 
     while i < vueltas and running:
   
-        #leer valor potenciometro
-        pot_value = read_potentiometer()
-        #mapear valor del potenciometro a la vel del motor
-        speed = map_value(pot_value, 0, 32767, min_speed, max_speed)
-  
         #mover motor a posicion determinada
-        stepper.motor_go(steps_matrix[, "Full", steps_per_revolution, 0.001, False, 1/speed)
+        stepper.motor_go(movements[i][1], "Full", movements[i][0], 0.001, False, 1/speed)
   
         i += 1
           
