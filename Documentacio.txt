@@ -8,8 +8,8 @@ Motor posicionador:
 
 
 Driver DRV8825
-    Imotor(A) = Vref(V) / 5
-    Vref = 0.3*5 = 1.5
+    Imotor(A) = Vref(V) * 2
+    Vref = 0.3/2 = 0,15
     Alimenta Vref con 12V y cables gruesos
     Si notas que el motor se calienta mucho o suena raro, baja VRef un poco (prueba 1.2V o 1.3V)
     utiliza una Printed Circuit Board
@@ -17,7 +17,7 @@ Driver DRV8825
 
 Driver A4988
 
-    VRef = 8 * Rs (resistencia de detección de corriente (en ohmios), generalmente 0.1Ω o 0.05Ω, dependiendo del módulo) * Imotor (corriente máxima por fase del motor 
+    VRef = 8 * Rs (resistencia de detección de corriente (en ohmios), generalmente 0.1Ω o 0.05Ω, dependiendo del módulo, tienes ke mirar las resistencias del controlador, muy pequeñito suele decir r100 = 0,1 Ohmnios) * Imotor (corriente máxima por fase del motor 
     (en amperios))
  
 ​
