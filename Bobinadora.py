@@ -3,6 +3,9 @@ import Adafruit_ADS1x15
 import time
 import RPi.GPIO as GPIO
 import threading
+import LCD_I2C_classe as LCD
+
+lcd = LCD.LCD_I2C()
 
 #Pin Configuration GPIO mode
 step_pin = 17
@@ -116,6 +119,7 @@ try:
 
         i += 1
         print(f"N. de vueltas: {i}, a vel: {speed / steps_per_revolution} vueltas/seg")
+        lcd.write(f"N. de vueltas: {i}, a vel: {speed / steps_per_revolution} vueltas/seg", 1)
 
 
 except KeyboardInterrupt:
@@ -127,4 +131,5 @@ finally:
     stepper.motor_stop()
     posicionador.motor_stop()
     GPIO.cleanup()
+    lcd.clear()
     print('Motor detenido')
