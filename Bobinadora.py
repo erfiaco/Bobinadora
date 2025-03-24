@@ -4,7 +4,6 @@ import time
 import RPi.GPIO as GPIO
 import threading
 import LCD_I2C_classe as LCD
-from Posicionador_Test import speed
 
 lcd = LCD.LCD_I2C()
 
