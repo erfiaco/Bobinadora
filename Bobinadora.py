@@ -113,14 +113,14 @@ try:
         # Iniciar los hilos
         thread_stepper.start()
         thread_posicionador.start()
-
+        lcd.write(f"N. de vueltas: {i}, a vel: {speed / steps_per_revolution} vueltas/seg", 1)
         # Esperar a que ambos motores terminen
         thread_stepper.join()
         thread_posicionador.join()
 
         i += 1
         print(f"N. de vueltas: {i}, a vel: {speed / steps_per_revolution} vueltas/seg")
-        lcd.write(f"N. de vueltas: {i}, a vel: {speed / steps_per_revolution} vueltas/seg", 1)
+
 
 
 except KeyboardInterrupt:

@@ -1,0 +1,29 @@
+2. ¿Los hilos de stepper y posicionador duran lo mismo?
+
+Conclusión: Sí, siempre y cuando la velocidad de stepper no exceda la de 2 revoluciones por segundo, y el posicionador no ejecute más de 400 pasos a una vel de 0.001 pasos por segundo.
+https://docs.google.com/spreadsheets/d/1Qi7RIxqTQCKuoaAVfiqX4xYpNxKymYjXmRRndLBG6pg/edit?usp=sharing
+
+stepper.motor_go(True, "Full", steps, 1.0 / speed, False, 0)
+Este mueve el motor principal steps_per_revolution pasos.
+
+La duración total depende de la velocidad (1.0 / speed por paso).
+
+Si steps_per_revolution = 200 y speed = 200, cada paso tarda 1.0 / 200 = 0.005 s, por lo que la ejecución total durará 200 * 0.005 = 1 s.
+
+posicionador.motor_go(direction, "Full", steps, 0.001, False, steps_per_revolution / speed - 0.001 * steps)
+Este mueve el motor movements[i][0] pasos en la dirección movements[i][1].
+
+Cada paso dura 0.001 s.
+
+El tiempo total de ejecución depende del número de pasos steps y del delay adicional (steps_per_revolution / speed - 0.001 * steps).
+
+Por ejemplo, si steps = 20:
+
+Tiempo por pasos: 20 * 0.001 = 0.02 s
+
+Tiempo extra: (200 / 200) - (0.001 * 20) = 1 - 0.02 = 0.98 s
+
+Total = 0.02 + 0.98 = 1 s (igual al otro hilo, pero depende del valor de steps).
+
+Tiempo por pasos: 400 * 0.001 = 0.4 s
+Tiempo extra: (200 / 200) - (0.001 * 400) = 1 - 0.4 = 0.6 s
