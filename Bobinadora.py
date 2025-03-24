@@ -4,6 +4,7 @@ import time
 import RPi.GPIO as GPIO
 import threading
 import LCD_I2C_classe as LCD
+from Posicionador_Test import speed
 
 lcd = LCD.LCD_I2C()
 
@@ -103,7 +104,8 @@ try:
         #leer valor potenciometro
         pot_value = read_potentiometer()
         #mapear valor del potenciometro a la vel del motor
-        speed = map_value(pot_value, 0, 32767, min_speed, max_speed)
+        #speed = map_value(pot_value, 0, 32767, min_speed, max_speed)
+        speed = 200 #inutilizamos el potenciómetro hasta que no arreglemos sus problemas
 
         # Crear hilos para cada motor
         thread_stepper = threading.Thread(target=mover_stepper, args=(steps_per_revolution, speed))
