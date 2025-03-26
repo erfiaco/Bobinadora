@@ -22,8 +22,8 @@ adc = Adafruit_ADS1x15.ADS1115()
 GAIN = 1
 
 #configuracion del motor
-min_speed = 200  #pasos por segundo
-max_speed = 1000  #pasos por segundo
+min_speed = 10  #pasos por segundo
+max_speed = 400  #pasos por segundo
 steps_per_revolution = 200  #200 pasos x 4 (microstepping)
 
 # Global flag loop control
