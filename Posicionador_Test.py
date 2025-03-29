@@ -25,6 +25,8 @@ def stop_loop(channel):
     print("Button pressed. Stopping the loop...")
     running = False
 
+steps_per_revolution = 200
+
 def generate_steps_matrix(positions):
     """
     Genera una matriz con el número de pasos necesarios y la dirección para alcanzar
@@ -43,6 +45,7 @@ def generate_steps_matrix(positions):
         current_position = target_position  # Actualiza la posición actual
 
     return steps_matrix
+
 
 
 # Add event detector for the button
@@ -72,7 +75,6 @@ except KeyboardInterrupt:
 
 finally:
     GPIO.remove_event_detect(button_pin)  # Detener la deteccion de eventos
-    stepper.motor_stop()
     posicionador.motor_stop()
     GPIO.cleanup()
     print('Motor detenido')
