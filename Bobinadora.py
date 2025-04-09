@@ -15,7 +15,7 @@ step_pin_pos = 6  #Board
 dir_pin_pos = 12  #Board 
 
 #creo instancia del motor
-stepper = RpiMotorLib.A4988Nema(dir_pin, step_pin, (5, 6, 13), "DRV8825")
+stepper = RpiMotorLib.A4988Nema(dir_pin, step_pin, (13, 19, 26), "DRV8825")
 posicionador = RpiMotorLib.A4988Nema(dir_pin_pos, step_pin_pos, (21, 21, 21), "DRV8825")  #el motor es de 5v
 
 adc = Adafruit_ADS1x15.ADS1115()
