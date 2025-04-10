@@ -22,9 +22,9 @@ adc = Adafruit_ADS1x15.ADS1115()
 GAIN = 1
 
 #configuracion del motor
-min_speed = 10  #pasos por segundo
-max_speed = 400  #pasos por segundo
-steps_per_revolution = 200  #200 pasos x 4 (microstepping)
+min_speed = 1  #pasos por segundo
+max_speed = 4  #pasos por segundo
+steps_per_revolution = 400  #200 pasos x 2 (microstepping)
 
 # Global flag loop control
 running = True
@@ -46,7 +46,7 @@ def stop_loop(channel):
 
 # Filtro de promedio movil
 readings = []
-num_readings = 3  # Numero de lecturas para el promedio
+num_readings = 5  # Numero de lecturas para el promedio
 
 
 def read_potentiometer():
@@ -87,7 +87,7 @@ movements = generate_steps_matrix(positions)
 
 def mover_stepper(steps, speed):
     """ Función para mover el motor principal en un hilo """
-    stepper.motor_go(True, "Full", steps, 1.0 / speed, False, 0)
+    stepper.motor_go(True, "Half", steps, 1.0 / speed, False, 0)
 
 
 def mover_posicionador(steps, direction, speed):
@@ -103,7 +103,7 @@ try:
         #leer valor potenciometro
         pot_value = round(read_potentiometer(), 1)
         #mapear valor del potenciometro a la vel del motor
-        speed = round(map_value(pot_value, 0, 32767, min_speed, max_speed), 0)
+        speed = steps_per_revolution * 0.5 * round(map_value(pot_value, 0, 32767, min_speed, max_speed), 0)
         #speed = 200 #inutilizamos el potenciómetro hasta que no arreglemos sus problemas
 
         # Crear hilos para cada motor
