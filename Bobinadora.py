@@ -4,6 +4,11 @@ import time
 import RPi.GPIO as GPIO
 import threading
 import LCD_I2C_classe as LCD
+import numpy as np
+
+
+
+
 
 lcd = LCD.LCD_I2C()
 
@@ -80,7 +85,7 @@ def generate_steps_matrix(positions):
 # Add event detector for the button
 GPIO.add_event_detect(button_pin, GPIO.FALLING, callback=stop_loop, bouncetime=300)  # Debounce time = 300ms
 
-positions = [400, 0, 400, 0, 400, 0]
+positions = np.load("vector_guardado.npy")
 movements = generate_steps_matrix(positions)
 
 
