@@ -11,20 +11,21 @@ lcd = LCD.LCD_I2C()
 step_pin = 17
 dir_pin = 18
 button_pin = 23
-step_pin_pos = 6  #Board 
-dir_pin_pos = 12  #Board 
+step_pin_pos = 6  #Board
+dir_pin_pos = 12  #Board
 
 #creo instancia del motor
-stepper = RpiMotorLib.A4988Nema(dir_pin, step_pin, (5, 6, 13), "DRV8825")
+stepper = RpiMotorLib.A4988Nema(dir_pin, step_pin, (13, 19, 26), "DRV8825")
 posicionador = RpiMotorLib.A4988Nema(dir_pin_pos, step_pin_pos, (21, 21, 21), "DRV8825")  #el motor es de 5v
 
 adc = Adafruit_ADS1x15.ADS1115()
 GAIN = 1
 
 #configuracion del motor
-min_speed = 100  #pasos por segundo
-max_speed = 400  #pasos por segundo
-steps_per_revolution = 200  #200 pasos x 4 (microstepping)
+min_speed = 1  #pasos por segundo
+max_speed = 4  #pasos por segundo
+steps_per_revolution = 400  #200 pasos x 2 (microstepping)
+
 
 # Global flag loop control
 running = True
@@ -60,10 +61,8 @@ def read_potentiometer():
 
 def generate_steps_matrix(positions):
     """
-        Genera una matriz con el número de pasos necesarios y la dirección para alcanzar
-        cada posición objetivo desde la posición actual.
-    
-        :param positions: Lista de posiciones en el eje X.
+        Genera una matriz con el núm de pasos necesarios y la dirección para alcanzar
+        cada posición objetivo desde la posición n ac   :param positions: Lista de posiciones en el eje X.
         :return: Lista de listas (matriz) con pasos y direcciones.
         """
     current_position = 0
@@ -87,7 +86,7 @@ movements = generate_steps_matrix(positions)
 
 def mover_stepper(steps, speed):
     """ Función para mover el motor principal en un hilo """
-    stepper.motor_go(True, "Full", steps, 1.0 / speed, False, 0)
+    stepper.motor_go(True, "Half", steps, 1.0 / speed, False, 0)
 
 
 def mover_posicionador(steps, direction, speed):
@@ -101,9 +100,10 @@ try:
 
     while i < vueltas and running:
         #leer valor potenciometro
-        pot_value = read_potentiometer()
+        pot_value = round(read_potentiometer(), 1)
         #mapear valor del potenciometro a la vel del motor
-        speed = map_value(pot_value, 0, 32767, min_speed, max_speed)
+
+        speed = steps_per_revolution * 0.5 * round(map_value(pot_value, 0, 32767, min_speed, max_speed), 0)
         #speed = 200 #inutilizamos el potenciómetro hasta que no arreglemos sus problemas
 
         # Crear hilos para cada motor
@@ -113,14 +113,17 @@ try:
         # Iniciar los hilos
         thread_stepper.start()
         thread_posicionador.start()
-        lcd.write(f"N. de vueltas: {i}", 1)
-	#lcd.write(f"vel", 2)
+
+        #lcd.write(f"N. de vueltas: {i}, a vel: {speed / steps_per_revolution} vueltas/seg", 1)
+        lcd.write(f"Vuelta: {i}", 1)
+        lcd.write(f"Vel: {speed/steps_per_revolution:.1f} v/s", 2)
+
         # Esperar a que ambos motores terminen
         thread_stepper.join()
         thread_posicionador.join()
 
         i += 1
-        print(f"N. de vueltas: {i}, a vel: {speed / steps_per_revolution} vueltas/seg")
+        print(f"N. de vueltas: {i}, a vel: {speed / steps_per_revolution:.1f} v/s")
 
 
 
