@@ -23,7 +23,7 @@ GAIN = 1
 
 #configuracion del motor
 min_speed = 1  #pasos por segundo
-max_speed = 4  #pasos por segundo
+max_speed = 5  #pasos por segundo
 steps_per_revolution = 400  #200 pasos x 2 (microstepping)
 
 
@@ -47,7 +47,7 @@ def stop_loop(channel):
 
 # Filtro de promedio movil
 readings = []
-num_readings = 5  # Numero de lecturas para el promedio
+num_readings = 1  # Numero de lecturas para el promedio
 
 
 def read_potentiometer():
