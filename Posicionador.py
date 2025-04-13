@@ -70,8 +70,8 @@ class BipolarMotor:
 
 if __name__ == "__main__":
     # Pines GPIO
-    STEP_PIN = 17  # Pin de paso
-    DIR_PIN = 27   # Pin de dirección
+    STEP_PIN = 6  # Pin de paso
+    DIR_PIN = 12   # Pin de dirección
 
     # Inicializa el motor
     motor = BipolarMotor(STEP_PIN, DIR_PIN)
