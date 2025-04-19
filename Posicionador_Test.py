@@ -40,7 +40,7 @@ def generate_steps_matrix(positions):
 
     for target_position in positions:
         steps = abs(target_position - current_position)
-        direction = True if target_position > current_position else False
+        direction = True if target_position < current_position else False
         steps_matrix.append([steps, direction])
         current_position = target_position  # Actualiza la posición actual
 
@@ -51,7 +51,7 @@ def generate_steps_matrix(positions):
 # Add event detector for the button
 GPIO.add_event_detect(button_pin, GPIO.FALLING, callback=stop_loop, bouncetime=300)  # Debounce time = 300ms
 
-positions = [-400, 20, 1, 5, 6, 8]
+positions = [400, 20, 1, 5, 6, 8]
 movements = generate_steps_matrix(positions)
 
 try:
