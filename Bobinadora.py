@@ -75,7 +75,7 @@ def generate_steps_matrix(positions):
 
     for target_position in positions:
         steps = abs(target_position - current_position)
-        direction = True if target_position > current_position else False
+        direction = True if target_position < current_position else False
         steps_matrix.append([steps, direction])
         current_position = target_position  # Actualiza la posición actual
 
