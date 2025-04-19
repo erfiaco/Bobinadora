@@ -100,7 +100,7 @@ def mover_posicionador(steps, direction, speed):
 
 
 try:
-    vueltas = 10
+    vueltas = len(positions)
     i = 0
 
     while i < vueltas and running:

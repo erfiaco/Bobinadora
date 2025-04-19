@@ -51,7 +51,7 @@ def generate_steps_matrix(positions):
 # Add event detector for the button
 GPIO.add_event_detect(button_pin, GPIO.FALLING, callback=stop_loop, bouncetime=300)  # Debounce time = 300ms
 
-positions = [400, 20, 1, 5, 6, 8]
+positions = [-400, 20, 1, 5, 6, 8]
 movements = generate_steps_matrix(positions)
 
 try:
