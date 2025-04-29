@@ -66,10 +66,10 @@ def read_potentiometer():
 
 def generate_steps_matrix(positions):
     """
-        Genera una matriz con el núm de pasos necesarios y la dirección para alcanzar
-        cada posición objetivo desde la posición n ac   :param positions: Lista de posiciones en el eje X.
+        Genera una matriz con el numero de pasos necesarios y la direccion para alcanzar
+        cada posicion objetivo desde la posicion actual :param positions: Lista de posiciones en el eje X.
         :return: Lista de listas (matriz) con pasos y direcciones.
-        """
+    """
     current_position = 0
     steps_matrix = []
 
@@ -77,7 +77,7 @@ def generate_steps_matrix(positions):
         steps = abs(target_position - current_position)
         direction = True if target_position < current_position else False
         steps_matrix.append([steps, direction])
-        current_position = target_position  # Actualiza la posición actual
+        current_position = target_position  # Actualiza la posicion actual
 
     return steps_matrix
 
@@ -90,12 +90,12 @@ movements = generate_steps_matrix(positions)
 
 
 def mover_stepper(steps, speed):
-    """ Función para mover el motor principal en un hilo """
+    """ Funcion para mover el motor principal en un hilo """
     stepper.motor_go(True, "Half", steps, 1.0 / speed, False, 0)
 
 
 def mover_posicionador(steps, direction, speed):
-    """ Función para mover el posicionador en un hilo """
+    """ Funcion para mover el posicionador en un hilo """
     posicionador.motor_go(direction, "Full", steps, 0.001, False, steps_per_revolution / speed - 0.001 * steps)
 
 
@@ -109,7 +109,7 @@ try:
         #mapear valor del potenciometro a la vel del motor
 
         speed = steps_per_revolution * 0.5 * round(map_value(pot_value, 0, 32767, min_speed, max_speed), 0)
-        #speed = 200 #inutilizamos el potenciómetro hasta que no arreglemos sus problemas
+        #speed = 200 #inutilizamos el potenciometro hasta que no arreglemos sus problemas
 
         # Crear hilos para cada motor
         thread_stepper = threading.Thread(target=mover_stepper, args=(steps_per_revolution, speed))
