@@ -22,3 +22,6 @@ plt.legend()
 # Guardar el graficoo como imagen PNG
 plt.savefig("grafico_vector_disperso.png")
 print("Grafico guardado como grafico_vector_disperso.png")
+
+#Luego tengo que abrir una terminal en local y copiar el archivo, poniendo esto:
+#scp Javo@192.168.1.128:/home/Javo/Documents/venvstepperm/Bobinadora/grafico_vector_disperso.png /home/javier/ProyectosManuales/

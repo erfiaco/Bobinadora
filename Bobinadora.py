@@ -85,7 +85,20 @@ def generate_steps_matrix(positions):
 # Add event detector for the button
 GPIO.add_event_detect(button_pin, GPIO.FALLING, callback=stop_loop, bouncetime=300)  # Debounce time = 300ms
 
-positions = np.load("vector_guardado.npy")
+
+modo = input("Quieres bobinar en modo Produccion (p) o Test (t)? ").strip().lower()
+
+if modo == "t":
+    print("Modo Test seleccionado")
+    positions = np.load("Test.npy")
+elif modo == "p":
+    print("Modo Produccion seleccionado")
+    positions = np.load("vector_guardado.npy")
+else:
+    print("Opcion no valida. Cerrando programa...")
+    sys.exit(1)
+
+
 movements = generate_steps_matrix(positions)
 
 
@@ -126,19 +139,23 @@ try:
         # Esperar a que ambos motores terminen
         thread_stepper.join()
         thread_posicionador.join()
-
+        lp = i
+        print(f"N. de posicion: {i}, a vel: {speed / steps_per_revolution:.1f} v/s")
         i += 1
-        print(f"N. de vueltas: {i}, a vel: {speed / steps_per_revolution:.1f} v/s")
-
 
 
 except KeyboardInterrupt:
     print('Programa detenido por el usuario')
+    i += 1
     running = False  #Ensure the loop stops
 
 finally:
     GPIO.remove_event_detect(button_pin)  # Detener la deteccion de eventos
+    running = False
     stepper.motor_stop()
+    movements = generate_steps_matrix([positions[i-1]]) #la funcion tiene un current position = 0 por default. me llegara i+1
+    mover_posicionador(movements[0][0], not(movements[0][1]), 200)
+    print(f"i={i-1} , {positions[i-1]}")    
     posicionador.motor_stop()
     GPIO.cleanup()
     lcd.clear()
